@@ -180,7 +180,7 @@
   <!-- HERO -->
   <section class="hero">
     <h1>HardGym — сила начинается здесь</h1>
-    <p>Фитнес-товары и экипировка для тех, кто тренируется на результат</p>
+    <p>Фитнес‑товары и экипировка для тех, кто тренируется на результат</p>
     <a href="#shop" class="btn">Перейти в магазин</a>
   </section>
 
@@ -220,7 +220,7 @@
     <h2>Рейтинг магазина</h2>
     <div class="rating">
       <div class="stars">★★★★★</div>
-      <div class="reviews">4.9 / 5 · 1 284 отзыва</div>
+      <div class="reviews">4.9 / 5 · 1 284 отзыва</div>
     </div>
   </section>
 
@@ -234,6 +234,89 @@
   <footer>
     © 2025 HardGym.de — Все права защищены
   </footer>
+
+
+
+<!-- SHOP PAGE -->
+<section id="shop-page">
+  <h1>Магазин</h1>
+  <div class="grid">
+    <div class="card" onclick="openProduct('straps')">
+      <div class="product-img"></div>
+      <h3>Лямки для тяги</h3>
+      <p>19.99 €</p>
+      <div class="rating">
+        <span class="stars">★★★★★</span>
+        <span class="reviews">(312)</span>
+      </div>
+    </div>
+
+    <div class="card" onclick="openProduct('bands')">
+      <div class="product-img"></div>
+      <h3>Эспандеры</h3>
+      <p>14.99 €</p>
+      <div class="rating">
+        <span class="stars">★★★★☆</span>
+        <span class="reviews">(198)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT PAGE -->
+<section id="product-page" style="display:none">
+  <button class="btn" onclick="goBack()">← Назад в магазин</button>
+  <div class="card" style="margin-top:20px">
+    <div class="grid">
+      <div class="product-img"></div>
+      <div class="product-img"></div>
+      <div class="product-img"></div>
+    </div>
+    <h2 id="product-title"></h2>
+    <p id="product-price"></p>
+    <div class="rating">
+      <span class="stars" id="product-stars"></span>
+      <span class="reviews" id="product-reviews"></span>
+    </div>
+    <p id="product-desc" class="about"></p>
+    <a href="#buy" class="btn">Купить</a>
+  </div>
+</section>
+
+<script>
+  const products = {
+    straps: {
+      title: 'Лямки для тяги',
+      price: '19.99 €',
+      stars: '★★★★★',
+      reviews: '312 отзывов',
+      desc: 'Прочные лямки для тяжёлых тяг. Подходят для бодибилдинга и пауэрлифтинга.'
+    },
+    bands: {
+      title: 'Эспандеры',
+      price: '14.99 €',
+      stars: '★★★★☆',
+      reviews: '198 отзывов',
+      desc: 'Универсальные эспандеры для тренировок, разминки и восстановления.'
+    }
+  }
+
+  function openProduct(id) {
+    document.getElementById('shop-page').style.display = 'none'
+    document.getElementById('product-page').style.display = 'block'
+    const p = products[id]
+    document.getElementById('product-title').innerText = p.title
+    document.getElementById('product-price').innerText = p.price
+    document.getElementById('product-stars').innerText = p.stars
+    document.getElementById('product-reviews').innerText = p.reviews
+    document.getElementById('product-desc').innerText = p.desc
+  }
+
+  function goBack() {
+    document.getElementById('product-page').style.display = 'none'
+    document.getElementById('shop-page').style.display = 'block'
+  }
+</script>
 
 </body>
 </html>
