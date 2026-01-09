@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Гантели ProSteel — HardGym.de</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0e0e11;--card:#16161c;--accent:#ff3c00;--text:#fff;--muted:#b5b5c0}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Montserrat,sans-serif;background:var(--bg);color:var(--text)}
+    a{text-decoration:none;color:inherit}
+
+    header{padding:20px 30px}
+    main{max-width:1000px;margin:auto;padding:40px 20px}
+
+    .back{margin-bottom:20px;display:inline-block;color:var(--muted)}
+
+    .product{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+
+    /* SLIDER */
+    .slider{position:relative;background:var(--card);border-radius:20px;padding:20px;overflow:hidden}
+    .slider img{width:100%;display:none}
+    .slider img.active{display:block}
+
+    .arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px}
+    .arrow.left{left:10px}
+    .arrow.right{right:10px}
+
+    .price{font-size:28px;font-weight:700;margin:15px 0}
+
+    .buy{display:inline-block;padding:14px 40px;border-radius:40px;background:var(--accent);margin-top:20px}
+
+    .card{background:var(--card);border-radius:20px;padding:25px;margin-top:40px}
+    .stars{color:gold;font-size:20px}
+
+    @media(max-width:800px){.product{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="shop.html" class="back">← Назад в магазин</a>
+</header>
+
+<main>
+  <div class="product">
+    <div class="slider" id="slider">
+      <img src="product1.png" class="active">
+      <img src="product1_2.png">
+      <img src="product1_3.png">
+
+      <div class="arrow left" onclick="prev()">‹</div>
+      <div class="arrow right" onclick="next()">›</div>
+    </div>
+
+    <div>
+      <h1>Гантели ProSteel</h1>
+      <div class="price">€89.99</div>
+      <p>Профессиональные гантели для зала и домашних тренировок.</p>
+      <a href="#" class="buy">Купить</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Описание</h2>
+    <p>Прочные стальные гантели с удобным хватом. Подходят для силовых тренировок любого уровня.</p>
+  </div>
+
+  <div class="card">
+    <h2>Отзывы</h2>
+    <div class="stars">★★★★★</div>
+    <p>124 отзыва — средняя оценка 5/5</p>
+  </div>
+</main>
+
+<script>
+  const images=document.querySelectorAll('#slider img');
+  let index=0;
+
+  function show(i){
+    images.forEach(img=>img.classList.remove('active'));
+    images[i].classList.add('active');
+  }
+
+  function next(){
+    index=(index+1)%images.length;
+    show(index);
+  }
+
+  function prev(){
+    index=(index-1+images.length)%images.length;
+    show(index);
+  }
+</script>
+
+</body>
+</html>

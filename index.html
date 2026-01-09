@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HardGym.de — товары для спортзала</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e11;
+      --card: #16161c;
+      --accent: #1f1c1b;
+      --accent-soft: rgba(255, 60, 0, 0.35);
+      --text: #ffffff;
+      --muted: #b5b5c0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      position: sticky;
+      top: 0;
+      background: rgba(14,14,17,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .menu-btn {
+      width: 30px;
+      cursor: pointer;
+    }
+
+    .menu-btn span {
+      display: block;
+      height: 3px;
+      background: var(--text);
+      margin: 6px 0;
+      transition: 0.3s;
+    }
+
+    /* MENU */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      width: 260px;
+      height: 100vh;
+      background: var(--card);
+      padding: 40px 20px;
+      transition: 0.4s;
+      z-index: 20;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.6);
+    }
+
+    .side-menu.active {
+      right: 0;
+    }
+
+    #overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .side-menu a {
+      display: block;
+      padding: 15px 0;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 120px 20px 80px;
+    }
+
+    .typing {
+      font-size: 42px;
+      font-weight: 700;
+      min-height: 60px;
+    }
+
+    .shop-btn {
+      margin-top: 40px;
+      padding: 16px 40px;
+      border-radius: 40px;
+      background: linear-gradient(120deg, var(--accent), #ff6a00, var(--accent));
+      background-size: 200% 200%;
+      color: #fff;
+      font-weight: 600;
+      display: inline-block;
+      box-shadow: 0 0 30px var(--accent-soft);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 0 transparent;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      box-shadow: 0 0 40px var(--accent-soft);
+      transform: translateY(-5px);
+    }
+
+    .product img {
+      width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .stars {
+      color: gold;
+      margin-top: 8px;
+      font-size: 18px;
+    }
+
+    /* RATING */
+    .big-rating {
+      text-align: center;
+    }
+
+    .big-rating .score {
+      font-size: 64px;
+      font-weight: 700;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+  </style>
+</head>
+<body>
+<div id="overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:0.3s;z-index:15"></div>
+
+<header>
+  <div class="logo"><img src="logo.png" alt="HardGym"></div>
+  <div class="menu-btn" id="menuBtn">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<nav class="side-menu" id="sideMenu">
+  <a href="index.html">Startseite</a>
+  <a href="shop.html">Shop</a>
+  <a href="rating.html">Bewertungen</a>
+  <a href="support.html">Support</a>
+  <a href="About.html">Über uns</a>
+</nav>
+
+<div class="hero">
+  <div class="typing" id="typing"></div>
+  <a href="shop.html" class="shop-btn">Zum Shop</a>
+</div>
+
+<section>
+  <h2 style="text-align:center;margin-bottom:30px">Top-Produkte</h2>
+  <div class="cards">
+    <a href="shop.html" class="card product">
+      <img src="img/product1.webp" alt="Produkt 1">
+      <h3>Zughilfen für Krafttraining, Schwarz</h3>
+      <div class="stars">★★★★★ (124)</div>
+    </a>
+    <a href="shop.html" class="card product">
+      <img src="img/product2.webp" alt="Produkt 2">
+      <h3>Langhantel PowerMax</h3>
+      <div class="stars">★★★★☆ (89)</div>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>Über uns – HardGym.de</h2>
+    <p>HardGym.de ist ein moderner Online-Sportshop für alle, die Training ernst nehmen. Bei uns findest du hochwertiges Equipment, Trainingszubehör und Sportbekleidung – sowohl für Profis als auch für ambitionierte Hobbysportler.</p>
+    <p></p>
+    <p>Unser Ziel ist es, dir zuverlässige, funktionale und langlebige Produkte anzubieten, die dich im Training wirklich weiterbringen. Wir arbeiten täglich daran, unser Sortiment zu verbessern und unseren Service auf höchstem Niveau zu halten.</p>
+    <p></p>
+    <p>Bereits tausende zufriedene Kunden vertrauen auf HardGym.de. Wir sind in Deutschland ansässig und bieten schnellen Versand innerhalb Deutschlands sowie in die gesamte EU an.</p>
+    <p></p>
+    <p>HardGym.de – dein zuverlässiger Partner für Kraft, Leistung und Fortschritt. 💪</p>
+  </div>
+</section>
+
+<section>
+  <div class="card big-rating">
+    <div class="score">4.8</div>
+    <div class="stars">★★★★★</div>
+    <p>Basierend auf 1.342 Kundenbewertungen aus ganz Deutschland</p>
+  </div>
+</section>
+
+<section style="max-width:600px;margin:0 auto 60px">
+  <a href="support.html" class="card" style="text-align:center;display:block">
+    <h2>Brauchst du Hilfe?</h2>
+    <p>Hast du Fragen zu unseren Produkten oder zu deiner Bestellung?<br>
+       Schreib uns im Support-Chat — wir antworten schnell und kompetent 💬</p>
+  </a>
+</section>
+
+<footer>
+  © 2026 HardGym.de — Alle Rechte vorbehalten. Für unsere Kunden gemacht.
+</footer>
+
+<script>
+  const overlay = document.getElementById('overlay');
+  const menuBtn = document.getElementById('menuBtn');
+  const sideMenu = document.getElementById('sideMenu');
+
+  menuBtn.onclick = () => {
+    sideMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+  };
+
+  overlay.onclick = () => {
+    sideMenu.classList.remove('active');
+    overlay.classList.remove('active');
+  };
+
+  const text = 'HardGym.de — Stärke beginnt hier';
+  let i = 0;
+  const typing = document.getElementById('typing');
+
+  function type() {
+    if (i < text.length) {
+      typing.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(type, 80);
+    }
+  }
+  type();
+</script>
+
+</body>
+</html>

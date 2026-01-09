@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>HardGym.de — Магазин</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0e0e11;--card:#16161c;--accent:#ff3c00;--text:#fff;--muted:#b5b5c0}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Montserrat,sans-serif;background:var(--bg);color:var(--text)}
+    a{text-decoration:none;color:inherit}
+
+    header{display:flex;justify-content:space-between;align-items:center;padding:20px 30px;position:sticky;top:0;background:rgba(14,14,17,.85);backdrop-filter:blur(8px);z-index:10}
+    .logo img{height:40px}
+
+    main{max-width:1200px;margin:auto;padding:40px 20px}
+
+    h1{text-align:center;margin-bottom:30px}
+
+    .filters{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;margin-bottom:40px}
+    select{background:var(--card);color:#fff;border:none;padding:12px 16px;border-radius:12px}
+
+    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:25px}
+    .card{background:var(--card);border-radius:20px;padding:20px;transition:.3s}
+    .card:hover{box-shadow:0 0 30px rgba(255,60,0,.3);transform:translateY(-5px)}
+    .card img{width:100%;height:160px;object-fit:contain;margin-bottom:15px}
+    .price{font-size:20px;font-weight:700}
+    .category{font-size:14px;color:var(--muted)}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="index.html"><img src="logo.png"></a></div>
+</header>
+
+<main>
+  <h1>Магазин</h1>
+
+  <div class="filters">
+    <select id="priceSort">
+      <option value="">Цена</option>
+      <option value="asc">Сначала дешевле</option>
+      <option value="desc">Сначала дороже</option>
+    </select>
+
+    <select id="dateSort">
+      <option value="">Дата</option>
+      <option value="new">Новое</option>
+      <option value="old">Старое</option>
+    </select>
+
+    <select id="categoryFilter">
+      <option value="">Все категории</option>
+      <option value="Инвентарь спорт">Инвентарь спорт</option>
+      <option value="Одежда">Одежда</option>
+      <option value="Штаны">Штаны</option>
+      <option value="Футболка">Футболка</option>
+      <option value="Кофта">Кофта</option>
+    </select>
+  </div>
+
+  <div class="products" id="products">
+    <a href="product1.html" class="card" data-price="2" data-date="new" data-category="Инвентарь спорт">
+      <img src="img/product1.webp"><h3>Zughilfen (Schwarz)</h3><div class="category">Инвентарь спорт</div><div class="price">€2.99</div>
+    </a>
+    <a href="product2.html" class="card" data-price="5" data-date="new" data-category="Инвентарь спорт">
+      <img src="img/product2.webp"><h3>Wrist Wraps</h3><div class="category">Инвентарь спорт</div><div class="price">€5.99</div>
+    </a>
+    <a href="#" class="card" data-price="59" data-date="old" data-category="Кофта">
+      <img src="product3.png"><h3>Кофта Training</h3><div class="category">Кофта</div><div class="price">€59</div>
+    </a>
+    <a href="#" class="card" data-price="49" data-date="new" data-category="Штаны">
+      <img src="product4.png"><h3>Штаны GymFit</h3><div class="category">Штаны</div><div class="price">€49</div>
+    </a>
+    <a href="#" class="card" data-price="119" data-date="old" data-category="Инвентарь спорт">
+      <img src="product5.png"><h3>Штанга PowerMax</h3><div class="category">Инвентарь спорт</div><div class="price">€119</div>
+    </a>
+  </div>
+</main>
+
+<script>
+  const priceSort=document.getElementById('priceSort');
+  const dateSort=document.getElementById('dateSort');
+  const categoryFilter=document.getElementById('categoryFilter');
+  const products=document.getElementById('products');
+
+  function update(){
+    let cards=[...products.children];
+
+    cards.forEach(c=>c.style.display='block');
+
+    if(categoryFilter.value)
+      cards.forEach(c=>{if(c.dataset.category!==categoryFilter.value)c.style.display='none'});
+
+    if(dateSort.value)
+      cards.sort((a,b)=>dateSort.value==='new'?b.dataset.date.localeCompare(a.dataset.date):a.dataset.date.localeCompare(b.dataset.date));
+
+    if(priceSort.value)
+      cards.sort((a,b)=>priceSort.value==='asc'?a.dataset.price-b.dataset.price:b.dataset.price-a.dataset.price);
+
+    cards.forEach(c=>products.appendChild(c));
+  }
+
+  priceSort.onchange=dateSort.onchange=categoryFilter.onchange=update;
+</script>
+
+</body>
+</html>
